@@ -19,6 +19,9 @@ export default class Character {
             x: 0,
             y: 0,
         }
+
+        this.move_speed = 2;
+        this.jump_force = 10;
     }
 
     update(time){
@@ -31,5 +34,17 @@ export default class Character {
 
     get_sprite_state(){
         return this.sprites_data.states[this.state];
+    }
+
+    forward(){
+        this.velocity.x = this.move_speed;
+    }
+
+    backward(){
+        this.velocity.x = -this.move_speed;
+    }
+
+    move_stop(){
+        this.velocity.x = 0;
     }
 }

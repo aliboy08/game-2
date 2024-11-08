@@ -6,13 +6,13 @@ export function apply_bounds(object, canvas){
 
     // left
     if( bounds.left <= 0 ) {
-        object.velocity.x = 1;
-        // object.position.x = 0;
+        // object.velocity.x = 1;
+        object.position.x = 0;
     }
     // right
     else if( bounds.right >= canvas.width ) {
-        object.velocity.x = -1;
-        // object.position.x = canvas.width;
+        // object.velocity.x = -1;
+        object.position.x = canvas.width;
     }
 
     let floor = canvas.height - floor_height;
