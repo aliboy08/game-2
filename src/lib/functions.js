@@ -80,16 +80,7 @@ export function get_random_min_max(min, max) {
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); 
 }
 
-export function push_target(target, direction, force){
-    if( direction == 'right' ) {
-        target.position.x += force;
-    }
-    else {
-        target.position.x -= force;
-    }
-}
-
-export function sprite_images_loader(options){
+export function sprite_images_loader_old_v1(options){
 
     const data = {
         frames_count: options.frames_count,
@@ -170,7 +161,7 @@ function load_images_sequential(options, on_image_load){
     return images;
 }
 
-export function sprite_images_loader_v2( data, base_path, file_extension = 'png' ){
+export function sprite_images_loader_old_v2( data, base_path, file_extension = 'png' ){
 
     for( const name in data ) {
 

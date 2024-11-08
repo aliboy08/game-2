@@ -1,3 +1,6 @@
+import Character from 'characters/character';
+import spiderman from 'characters/spiderman/spiderman.json';
+
 const frame_time = {
     previous: 0,
     seconds_passed: 0,
@@ -5,6 +8,7 @@ const frame_time = {
 
 let canvas;
 let ctx;
+let p;
 
 function init(){
     init_canvas();
@@ -14,7 +18,13 @@ function init(){
 window.addEventListener('load', init);
 
 function init_game(){
-
+    p = new Character({
+        sprites_data: spiderman,
+        position: {
+            x: 100,
+            y: 100
+        }
+    });
 }
 
 function init_canvas(){
@@ -39,8 +49,10 @@ function frame(time){
 }
 
 function update(time){
+    p.update(time);
 }
 
 function draw(ctx){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    p.draw(ctx);
 }

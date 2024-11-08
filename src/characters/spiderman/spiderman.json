@@ -1,0 +1,20 @@
+{
+    "id": "spiderman",
+    "base_src": "sprites/spiderman/",
+    "scale": 1,
+    "offset": {
+        "x": -280,
+        "y": -210
+    },
+    "width": 60,
+    "height": 80,
+    "image_width": 640,
+    "image_height": 480,
+    "states": {
+        "idle": {
+            "base_file_name": "MVC2_SpiderMan_" ,
+            "index_start": 159,
+            "index_end": 167
+        }
+    }
+}
