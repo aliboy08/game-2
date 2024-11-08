@@ -4,7 +4,6 @@ export default {
 		alias: {
 			components: '/src/components',
 			characters: '/src/characters',
-			ui: '/src/ui',
 			lib: '/src/lib',
             src: '/src',
 		},

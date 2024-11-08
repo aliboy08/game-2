@@ -14,19 +14,19 @@ export default class Character {
             x: 0,
             y: 0,
         }
+
+        this.velocity = {
+            x: 0,
+            y: 0,
+        }
     }
 
     update(time){
-        if( !this.sprites_data ) return;
         sprites_update(this, time);
-
-        // this.position.x += 1;
     }
 
     draw(ctx){
-        if( !this.sprites_data ) return;
         sprites_draw(this, ctx);
-        ctx.strokeRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     get_sprite_state(){

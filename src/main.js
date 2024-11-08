@@ -1,5 +1,8 @@
 import Character from 'characters/character';
 import spiderman from 'characters/spiderman/spiderman.json';
+import { debug_draw } from 'components/debug';
+import { apply_bounds } from 'components/bounds';
+import { apply_gravity } from 'components/gravity';
 
 const frame_time = {
     previous: 0,
@@ -20,11 +23,9 @@ window.addEventListener('load', init);
 function init_game(){
     p = new Character({
         sprites_data: spiderman,
-        position: {
-            x: 100,
-            y: 100
-        }
     });
+
+    p.velocity.x = 1;
 }
 
 function init_canvas(){
@@ -50,9 +51,13 @@ function frame(time){
 
 function update(time){
     p.update(time);
+    p.position.x += p.velocity.x;
+    apply_bounds(p, canvas)
+    apply_gravity(p, time);
 }
 
 function draw(ctx){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     p.draw(ctx);
+    debug_draw(p, ctx)
 }
