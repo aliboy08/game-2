@@ -8,7 +8,7 @@ export function sprites_loader(data){
 
         state.images = [];
         
-        state.image_index.forEach(range=>{
+        state.indexes.forEach(range=>{
 
             let [start, end] = range;
 
@@ -33,12 +33,6 @@ export function sprites_loader(data){
             
         })
         
-        // for( let i = state.index_start; i <= state.index_end; i++ ) {
-        //     const img = new Image();
-        //     img.src = `${data.base_src + state_key}/${state.base_file_name}${i}.${file_extension}`;
-        //     state.images.push(img);
-        // }
-
         state.index = 0;
 
         if( typeof state.time === 'undefined' ) {
@@ -53,7 +47,7 @@ export function sprites_draw(object, ctx){
 
     const state = object.get_sprite_state();
 
-    console.log(object.state)
+    // console.log(object.state)
 
     const scale = object.sprites_data.scale;
     const { image_width, image_height } = object.sprites_data;

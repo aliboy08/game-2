@@ -1,10 +1,11 @@
 export default class Stage {
     
-    constructor(canvas){
+    constructor(ctx){
         this.entities = [];
         this.gravity = 8;
         this.floor_height = 20;
-        this.canvas = canvas;
+        this.ctx = ctx;
+        this.canvas = ctx.canvas;
     }
     
     update(time){
@@ -54,6 +55,11 @@ export default class Stage {
         entity.position.y = bounds_bottom;
         entity.velocity.y = this.gravity;
         entity.is_grounded = true;
+    }
+
+    add_entity(entity){
+        entity.ctx = this.ctx;
+        this.entities.push(entity);
     }
     
 }

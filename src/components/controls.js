@@ -51,6 +51,18 @@ export default class Controls {
 
     }
 
+    attack_1(){
+
+    }
+
+    attack_2(){
+        
+    }
+
+    attack_3(){
+        
+    }
+
     action_end(action){
 
         if( action === 'forward' ) {

@@ -26,8 +26,11 @@
         "jump": {
             "indexes": [[197, 189], [189, 198]]
         },
-        "jump_forward": {
-            "indexes": [[200, 210]]
+        "jump_start": {
+            "indexes": [[198, 195]]
+        },
+        "fall": {
+            "indexes": [[191, 195]]
         }
     }
 }

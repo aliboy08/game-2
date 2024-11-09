@@ -22,10 +22,10 @@ function init(){
 window.addEventListener('load', init);
 
 function init_game(){
-    stage = new Stage(canvas);
+    stage = new Stage(ctx);
     p1 = new Spiderman({pid:'P1'});
     new Controls(p1)
-    stage.entities.push(p1);
+    stage.add_entity(p1);
 }
 
 function update(time){

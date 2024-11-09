@@ -5,7 +5,6 @@ export default class Character {
 
     load_sprite(data){
         this.sprites_data = sprites_loader(data);
-        console.log(this.sprites_data);
     }
 
     init(args){
@@ -26,7 +25,7 @@ export default class Character {
         }
 
         this.move_speed = 2;
-        this.jump_force = 600;
+        this.jump_force = 700;
 
         this.movement = movement(this);
     }
@@ -46,8 +45,14 @@ export default class Character {
 
     animate(state){
         if( this.state === state ) return;
-        console.log('animate', state)
+        // console.log('animate', state)
         this.state = state;
         this.sprites_data.states[this.state].index = 0;
+    }
+
+    get_direction(){
+        if( this.velocity.x > 0 ) return 'forward';
+        if( this.velocity.x < 0 ) return 'backward';
+        return false;
     }
 }
