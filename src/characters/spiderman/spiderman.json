@@ -28,6 +28,9 @@
         },
         "jump_forward": {
             "indexes": [[200, 210]]
+        },
+        "land": {
+            "indexes": [[196, 199]]
         }
     }
 }

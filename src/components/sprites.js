@@ -73,6 +73,8 @@ export function sprites_update(object, time){
     object.animation_timer = time.previous;
     
     state.index++;
+
+    console.log(object.state)
     
     if( state.loop ) {
         if( state.index === state.images.length ) {
@@ -84,6 +86,7 @@ export function sprites_update(object, time){
         if( state.index === state.images.length ) {
             // freeze to last frame
             state.index = state.images.length-1;
+            object.animation_end(object.state);
         }
     }
     

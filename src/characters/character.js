@@ -1,5 +1,6 @@
 import { sprites_loader, sprites_draw, sprites_update } from 'components/sprites';
 import { movement } from './movement';
+import { jump } from './jump';
 
 export default class Character {
 
@@ -26,13 +27,19 @@ export default class Character {
 
         this.move_speed = 2;
         this.jump_force = 700;
+        
+        this.hooks = {
+            update: [],
+            animation_end: [],
+        };
 
-        this.movement = movement(this);
+        movement(this);
+        jump(this);
     }
 
     update(time){
         sprites_update(this, time);
-        this.movement.update();
+        this.hooks.update.forEach(action=>action(time))
     }
 
     draw(ctx){
@@ -48,6 +55,10 @@ export default class Character {
         // console.log('animate', state)
         this.state = state;
         this.sprites_data.states[this.state].index = 0;
+    }
+
+    animation_end(state){
+        this.hooks.animation_end.forEach(action=>action(state))
     }
 
     get_direction(){
