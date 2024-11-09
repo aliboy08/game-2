@@ -37,6 +37,9 @@
         },
         "landing": {
             "indexes": [[193, 199]]
+        },
+        "crouch": {
+            "indexes": [[217, 220]]
         }
     }
 }

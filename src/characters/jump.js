@@ -89,7 +89,6 @@ export function jump( entity ){
         ctx.stroke();
     }
     
-    
     entity.hooks.update.push(update)
     entity.hooks.animation_end.push(animation_end)
     entity.hooks.draw.push(draw)
