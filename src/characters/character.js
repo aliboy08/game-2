@@ -1,4 +1,5 @@
 import { sprites_loader, sprites_draw, sprites_update } from 'components/sprites';
+import { movement } from './movement';
 
 export default class Character {
 
@@ -24,12 +25,14 @@ export default class Character {
         }
 
         this.move_speed = 2;
-        this.jump_force = 500;
+        this.jump_force = 600;
+
+        this.movement = movement(this);
     }
 
     update(time){
         sprites_update(this, time);
-        this.position.x += this.velocity.x;
+        this.movement.update();
     }
 
     draw(ctx){
@@ -38,22 +41,5 @@ export default class Character {
 
     get_sprite_state(){
         return this.sprites_data.states[this.state];
-    }
-
-    forward(){
-        this.velocity.x = this.move_speed;
-    }
-
-    backward(){
-        this.velocity.x = -this.move_speed;
-    }
-
-    move_stop(){
-        this.velocity.x = 0;
-    }
-
-    jump(){
-        this.is_jumping = true;
-        this.velocity.y = -this.jump_force;
     }
 }

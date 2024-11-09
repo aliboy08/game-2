@@ -40,8 +40,8 @@ function draw(ctx){
 
 function init_canvas(){
     canvas = document.querySelector('canvas');
-    canvas.width = 1200;
-    canvas.height = 600;
+    canvas.width = 1000;
+    canvas.height = 500;
     
     ctx = canvas.getContext('2d');
     
