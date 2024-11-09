@@ -24,11 +24,12 @@ export default class Character {
         }
 
         this.move_speed = 2;
-        this.jump_force = 10;
+        this.jump_force = 500;
     }
 
     update(time){
         sprites_update(this, time);
+        this.position.x += this.velocity.x;
     }
 
     draw(ctx){
@@ -49,5 +50,10 @@ export default class Character {
 
     move_stop(){
         this.velocity.x = 0;
+    }
+
+    jump(){
+        this.is_jumping = true;
+        this.velocity.y = -this.jump_force;
     }
 }
