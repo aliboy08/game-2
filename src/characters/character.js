@@ -44,6 +44,7 @@ export default class Character {
     }
 
     animate(state){
+        if( this.state === state ) return;
         console.log('animate', state)
         this.state = state;
         this.sprites_data.states[this.state].index = 0;

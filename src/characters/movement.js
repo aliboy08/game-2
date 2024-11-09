@@ -22,14 +22,10 @@ export function movement( entity ){
 
     function jump_end(){
         entity.is_jumping = false;
-        entity.is_falling = false;
         entity.state = 'idle';
     }
 
     function falling(){
-        if( entity.is_falling ) return;
-        console.log('falling')
-        entity.is_falling = true;
         entity.animate('fall');
     }
 
