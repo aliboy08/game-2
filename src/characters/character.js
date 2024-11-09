@@ -5,6 +5,7 @@ export default class Character {
 
     load_sprite(data){
         this.sprites_data = sprites_loader(data);
+        console.log(this.sprites_data);
     }
 
     init(args){

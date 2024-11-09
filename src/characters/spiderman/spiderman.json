@@ -20,6 +20,14 @@
         },
         "fall": {
             "image_index": [[189, 198]]
+        },
+        "forward": {
+            "loop": true,
+            "image_index": [[169, 180]]
+        },
+        "backward": {
+            "loop": true,
+            "image_index": [[180, 169]]
         }
     }
 }

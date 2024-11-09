@@ -2,14 +2,17 @@ export function movement( entity ){
     
     entity.forward = ()=>{
         entity.velocity.x = entity.move_speed;
+        entity.animate('forward');
     }
 
     entity.backward = ()=>{
         entity.velocity.x = -entity.move_speed;
+        entity.animate('backward');
     }
 
     entity.move_stop = ()=>{
         entity.velocity.x = 0;
+        entity.animate('idle');
     }
 
     entity.jump = ()=>{
@@ -21,11 +24,13 @@ export function movement( entity ){
     }
 
     function jump_end(){
+        if( !entity.is_jumping ) return;
         entity.is_jumping = false;
-        entity.state = 'idle';
+        entity.animate('idle');
     }
 
     function falling(){
+        if( !entity.is_jumping ) return;
         entity.animate('fall');
     }
 

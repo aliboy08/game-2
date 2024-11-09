@@ -52,6 +52,9 @@ export function sprites_loader(data){
 export function sprites_draw(object, ctx){
 
     const state = object.get_sprite_state();
+
+    console.log(object.state)
+
     const scale = object.sprites_data.scale;
     const { image_width, image_height } = object.sprites_data;
     let { x, y } = object.position;
