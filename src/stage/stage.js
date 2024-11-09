@@ -3,7 +3,7 @@ export default class Stage {
     constructor(canvas){
         this.entities = [];
         this.gravity = 8;
-        this.floor_height = 100;
+        this.floor_height = 20;
         this.canvas = canvas;
     }
     
@@ -22,32 +22,37 @@ export default class Stage {
     }
 
     apply_gravity(entity, time){
-        console.log(time)
         entity.velocity.y += this.gravity;
         entity.position.y += entity.velocity.y * time.seconds_passed;
     }
 
     apply_bounds(entity){
+        this.limit_left(entity);
+        this.limit_right(entity);
+        this.limit_bottom(entity);
+    }
 
-        // left
-        if( entity.position.x <= 0 ) {
-            entity.position.x = 0;
-            
-        }
-        // right
-        else if( entity.position.x + entity.width >= this.canvas.width ) {
-            entity.position.x = this.canvas.width - entity.width;
-        }
+    limit_left(entity){
+        if( entity.position.x >= 0 ) return;
+        entity.position.x = 0;
+    }
 
-        let floor = this.canvas.height - this.floor_height;
-        
-        // bottom
-        if( entity.position.y + entity.height >= floor ) {
-            if( entity.velocity.y < 0 ) return; // jumping
-            entity.position.y = floor;
-            entity.velocity.y = this.gravity;
-        }
-        
+    limit_right(entity){
+        const bounds_right = this.canvas.width - entity.width;
+        if( entity.position.x <= bounds_right ) return;
+        entity.position.x = bounds_right;
+    }
+
+    limit_bottom(entity){
+
+        if( entity.velocity.y < 0 ) return; // jump up
+
+        let bounds_bottom = this.canvas.height - this.floor_height - entity.height;
+
+        if( entity.position.y <= bounds_bottom ) return;
+
+        entity.position.y = bounds_bottom;
+        entity.velocity.y = this.gravity;
     }
     
 }
