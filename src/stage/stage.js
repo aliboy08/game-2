@@ -61,5 +61,11 @@ export default class Stage {
         entity.ctx = this.ctx;
         this.entities.push(entity);
     }
+
+    add_player(player, args){
+        player.stage = this;
+        this.add_entity(player)
+        player.init(args);
+    }
     
 }

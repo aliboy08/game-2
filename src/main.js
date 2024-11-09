@@ -1,7 +1,4 @@
-import { debug_draw } from 'components/debug';
-import Controls from 'components/controls';
 import Stage from './stage/stage';
-
 import Spiderman from 'characters/spiderman/spiderman';
 
 const frame_time = {
@@ -11,7 +8,6 @@ const frame_time = {
 
 let canvas;
 let ctx;
-let p1;
 let stage;
 
 function init(){
@@ -23,9 +19,7 @@ window.addEventListener('load', init);
 
 function init_game(){
     stage = new Stage(ctx);
-    p1 = new Spiderman({pid:'P1'});
-    new Controls(p1)
-    stage.add_entity(p1);
+    stage.add_player(new Spiderman(), {pid:'P1'});
 }
 
 function update(time){
@@ -35,7 +29,6 @@ function update(time){
 function draw(ctx){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     stage.draw(ctx);
-    debug_draw(p1, ctx)
 }
 
 function init_canvas(){

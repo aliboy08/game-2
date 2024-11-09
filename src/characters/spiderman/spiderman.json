@@ -29,8 +29,14 @@
         "jump_forward": {
             "indexes": [[200, 210]]
         },
+        "jump_backward": {
+            "indexes": [[211, 216]]
+        },
         "land": {
             "indexes": [[196, 199]]
+        },
+        "landing": {
+            "indexes": [[193, 199]]
         }
     }
 }

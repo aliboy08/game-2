@@ -1,6 +1,8 @@
 import { sprites_loader, sprites_draw, sprites_update } from 'components/sprites';
 import { movement } from './movement';
 import { jump } from './jump';
+import { debug_draw } from 'components/debug';
+import Controls from 'components/controls';
 
 export default class Character {
 
@@ -31,10 +33,13 @@ export default class Character {
         this.hooks = {
             update: [],
             animation_end: [],
+            draw: [],
         };
-
+        
         movement(this);
         jump(this);
+
+        new Controls(this);
     }
 
     update(time){
@@ -44,6 +49,8 @@ export default class Character {
 
     draw(ctx){
         sprites_draw(this, ctx);
+        debug_draw(this, ctx);
+        this.hooks.draw.forEach(action=>action(ctx))
     }
 
     get_sprite_state(){

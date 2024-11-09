@@ -74,7 +74,7 @@ export function sprites_update(object, time){
     
     state.index++;
 
-    console.log(object.state)
+    // console.log(object.state)
     
     if( state.loop ) {
         if( state.index === state.images.length ) {
