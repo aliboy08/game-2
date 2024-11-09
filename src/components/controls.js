@@ -22,14 +22,13 @@ export default class Controls {
         }
 
         document.addEventListener('keydown',e=>{
-            console.log(e.code)
-            if( !controls[player.id][e.code] ) return;
-            this[controls[player.id][e.code]]();
+            if( !controls[player.pid][e.code] ) return;
+            this[controls[player.pid][e.code]]();
         })
 
         document.addEventListener('keyup',(e)=>{
-            if( !controls[player.id][e.code] ) return;
-            this.action_end(controls[player.id][e.code]);
+            if( !controls[player.pid][e.code] ) return;
+            this.action_end(controls[player.pid][e.code]);
         });
 
     }
@@ -45,7 +44,7 @@ export default class Controls {
     }
 
     jump(){
-
+        
     }
 
     crouch(){

@@ -2,12 +2,15 @@ import { sprites_loader, sprites_draw, sprites_update } from 'components/sprites
 
 export default class Character {
 
-    constructor(args) {
-        this.sprites_data = sprites_loader(args.sprites_data);
+    load_sprite(data){
+        this.sprites_data = sprites_loader(data);
+    }
+
+    init(args){
         this.width = this.sprites_data.width;
         this.height = this.sprites_data.height;
-        this.id = args.id ?? args.sprites_data.id ?? '';
-
+        this.pid = args.pid ?? 'P1';
+        
         this.state = 'idle';
         this.animation_timer = 0;
         this.position = args.position ?? {

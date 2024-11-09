@@ -1,9 +1,9 @@
-import Character from 'characters/character';
-import spiderman from 'characters/spiderman/spiderman.json';
 import { debug_draw } from 'components/debug';
 import { apply_bounds } from 'components/bounds';
 import { apply_gravity } from 'components/gravity';
 import Controls from 'components/controls';
+
+import Spiderman from 'characters/spiderman/spiderman';
 
 const frame_time = {
     previous: 0,
@@ -22,11 +22,7 @@ function init(){
 window.addEventListener('load', init);
 
 function init_game(){
-    p1 = new Character({
-        id: 'P1',
-        sprites_data: spiderman,
-    });
-
+    p1 = new Spiderman({pid:'P1'});
     new Controls(p1)
 }
 
