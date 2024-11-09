@@ -8,11 +8,36 @@ export function sprites_loader(data){
 
         state.images = [];
         
-        for( let i = state.index_start; i <= state.index_end; i++ ) {
-            const img = new Image();
-            img.src = `${data.base_src + state_key}/${state.base_file_name}${i}.${file_extension}`;
-            state.images.push(img);
-        }
+        state.image_index.forEach(range=>{
+
+            let [start, end] = range;
+
+            let i = start;
+
+            if( start < end ) {
+                while( i <= end ) {
+                    const img = new Image();
+                    img.src = `${data.base_src + i}.${file_extension}`;
+                    state.images.push(img);
+                    i++;
+                }
+            }
+            else if ( start > end ) {
+                while( i >= end ) {
+                    const img = new Image();
+                    img.src = `${data.base_src + i}.${file_extension}`;
+                    state.images.push(img);
+                    i--;
+                }
+            }
+            
+        })
+        
+        // for( let i = state.index_start; i <= state.index_end; i++ ) {
+        //     const img = new Image();
+        //     img.src = `${data.base_src + state_key}/${state.base_file_name}${i}.${file_extension}`;
+        //     state.images.push(img);
+        // }
 
         state.index = 0;
 
@@ -46,11 +71,23 @@ export function sprites_draw(object, ctx){
 export function sprites_update(object, time){
 
     const state = object.get_sprite_state();
+
     if( time.previous < object.animation_timer + state.time ) return;
     object.animation_timer = time.previous;
-
+    
     state.index++;
-    if( state.index === state.images.length ) {
-        state.index = 0;
+    
+    if( state.loop ) {
+        if( state.index === state.images.length ) {
+            // restart animation
+            state.index = 0;
+        }
     }
+    else {
+        if( state.index === state.images.length ) {
+            // freeze to last frame
+            state.index = state.images.length-1;
+        }
+    }
+    
 }

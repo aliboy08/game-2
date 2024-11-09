@@ -1,5 +1,5 @@
 import Character from 'characters/character';
-import sprite_data from './data.json';
+import sprite_data from './spiderman.json';
 
 export default class Spiderman extends Character {
 

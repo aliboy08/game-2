@@ -42,4 +42,10 @@ export default class Character {
     get_sprite_state(){
         return this.sprites_data.states[this.state];
     }
+
+    animate(state){
+        console.log('animate', state)
+        this.state = state;
+        this.sprites_data.states[this.state].index = 0;
+    }
 }

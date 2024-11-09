@@ -1,0 +1,25 @@
+{
+    "id": "spiderman",
+    "base_src": "sprites/spiderman/MVC2_SpiderMan_",
+    "scale": 1,
+    "offset": {
+        "x": -280,
+        "y": -210
+    },
+    "width": 60,
+    "height": 80,
+    "image_width": 640,
+    "image_height": 480,
+    "states": {
+        "idle": {
+            "loop": true,
+            "image_index": [[159, 167]]
+        },
+        "jump": {
+            "image_index": [[198, 189]]
+        },
+        "fall": {
+            "image_index": [[189, 198]]
+        }
+    }
+}

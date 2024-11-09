@@ -53,6 +53,7 @@ export default class Stage {
 
         entity.position.y = bounds_bottom;
         entity.velocity.y = this.gravity;
+        entity.is_grounded = true;
     }
     
 }

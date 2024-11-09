@@ -13,16 +13,41 @@ export function movement( entity ){
     }
 
     entity.jump = ()=>{
+        if( entity.is_jumping ) return;
         entity.is_jumping = true;
+        entity.is_grounded = false;
         entity.velocity.y = -entity.jump_force;
+        entity.animate('jump');
     }
 
-    const update = () => {
+    function jump_end(){
+        entity.is_jumping = false;
+        entity.is_falling = false;
+        entity.state = 'idle';
+    }
+
+    function falling(){
+        if( entity.is_falling ) return;
+        console.log('falling')
+        entity.is_falling = true;
+        entity.animate('fall');
+    }
+
+    function update_jump(){
+        if( entity.is_grounded ) {
+            jump_end();
+            return;
+        }
+
+        if( entity.velocity.y > 0 ) {
+            falling();
+        }
+    }
+
+    function update(){
         entity.position.x += entity.velocity.x;
+        update_jump();
     }
 
-    return {
-        update
-    }
-
+    return { update }
 }
