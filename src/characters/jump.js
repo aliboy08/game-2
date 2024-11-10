@@ -11,8 +11,6 @@ export function jump_init( entity ){
     let state = '';
 
     entity.jump = ()=>{
-
-        if( entity.is_jumping ) return;
         
         entity.is_jumping = true;
         entity.is_grounded = false;
@@ -61,6 +59,10 @@ export function jump_init( entity ){
         // console.log('landed')
         entity.is_jumping = false;
         entity.animate('land')
+
+        if( typeof entity.on_land === 'function' ) {
+            entity.on_land();
+        }
     }
     
     function update(){

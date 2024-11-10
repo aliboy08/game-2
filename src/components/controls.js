@@ -12,9 +12,9 @@ const controls = {
 
 export default class Controls {
     
-    constructor(player){
+    constructor(entity){
 
-        this.player = player;
+        this.entity = entity;
 
         this.pressing = {
             forward: false,
@@ -23,37 +23,83 @@ export default class Controls {
         }
 
         document.addEventListener('keydown',e=>{
-            if( !controls[player.pid][e.code] ) return;
-            this[controls[player.pid][e.code]]();
+            if( !controls[entity.pid] ) return;
+            let action = controls[entity.pid][e.code];
+            if( typeof this[action] === 'function' ) {
+                this[action]();
+            }
         })
 
         document.addEventListener('keyup',(e)=>{
-            if( !controls[player.pid][e.code] ) return;
-            this.action_end(controls[player.pid][e.code]);
+            if( !controls[entity.pid] ) return;
+            let action = controls[entity.pid][e.code];
+            if( typeof this[action+'_end'] === 'function' ) {
+                this[action+'_end']();
+            }
         });
-
     }
 
     forward(){
         this.pressing.forward = true;
-        this.player.forward();
+        if( this.pressing.crouch ) return;
+        this.entity.forward();
+    }
+    forward_end(){
+        this.pressing.forward = false;
+        this.move_continue();
     }
 
     backward(){
         this.pressing.backward = true;
-        this.player.backward();
+        if( this.pressing.crouch ) return;
+        this.entity.backward();
+    }
+    backward_end(){
+        this.pressing.backward = false;
+        this.move_continue();
     }
 
-    jump(){
-        this.player.jump();
+    move_continue(){
+        if( this.pressing.forward ) {
+            this.forward();
+            return true;
+        }
+
+        if( this.pressing.backward ) {
+            this.backward();
+            return true;
+        }
+        
+        this.entity.move_stop();
+        return false;
     }
 
     crouch(){
         this.pressing.crouch = true;
-        if( this.player.is_jumping ) return;
-        this.player.crouch();
+        if( this.entity.is_jumping ) return;
+        this.entity.crouch();
+    }
+    crouch_end(){
+        this.pressing.crouch = false;
+        this.entity.crouch_end();
+        this.move_continue();
+    }
+    crouch_continue(){
+        if( !this.pressing.crouch ) return false;
+        this.crouch();
+        return true;
     }
 
+    jump(){
+        if( this.entity.is_jumping ) return;
+        this.entity.jump();
+        this.entity.on_land = ()=>{
+            this.entity.on_land = null;
+            if( this.crouch_continue() ) return;
+            this.move_continue();
+        }
+    }
+    
     attack_1(){
 
     }
@@ -65,48 +111,5 @@ export default class Controls {
     attack_3(){
         
     }
-
-    action_end(action){
-
-        if( action === 'forward' ) {
-
-            this.pressing.forward = false;
-
-            if( this.pressing.backward ) {
-                this.player.backward();
-            }
-            else {
-                this.player.move_stop();
-            }
-
-        }
-        else if( action === 'backward' ) {
-
-            this.pressing.backward = false;
-
-            if( this.pressing.forward ) {
-                this.player.forward();
-            }
-            else {
-                this.player.move_stop();
-            }
-        }
-        
-        else if( action === 'crouch' ) {
-            
-            this.pressing.crouch = false;
-
-            if( this.pressing.forward ) {
-                this.player.forward();
-            }
-            else if ( this.pressing.backward ){
-                this.player.backward();
-            }
-            else {
-                this.player.animate('idle');
-            }
-
-        }
-    }
-
+    
 }
