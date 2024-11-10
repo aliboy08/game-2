@@ -1,4 +1,4 @@
-export function add_jump( entity ){
+export function jump_init( entity ){
     
     const stage = entity.stage;
     const canvas = entity.stage.canvas;

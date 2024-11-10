@@ -1,4 +1,4 @@
-export function add_movement( entity ){
+export function movement_init( entity ){
 
     entity.is_moving = false;
     entity.is_backward = false;

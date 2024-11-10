@@ -1,8 +1,9 @@
-import { sprites_loader, sprites_draw, sprites_update } from 'components/sprites';
-import { add_movement } from './movement';
-import { add_jump } from './jump';
-import { add_crouch } from './crouch';
-import { debug_draw } from 'components/debug';
+import { sprites_loader, sprite_init } from 'components/sprites';
+import { movement_init } from './movement';
+import { jump_init } from './jump';
+import { crouch_init } from './crouch';
+import { hitbox_init } from './hitbox';
+import { debug_init } from 'components/debug';
 import Controls from 'components/controls';
 
 export default class Character {
@@ -29,7 +30,7 @@ export default class Character {
             y: 0,
         }
 
-        this.move_speed = 2;
+        this.move_speed = 3;
         this.jump_force = 700;
         
         this.hooks = {
@@ -38,21 +39,21 @@ export default class Character {
             draw: [],
         };
         
-        add_movement(this);
-        add_crouch(this);
-        add_jump(this);
+        sprite_init(this);
+        hitbox_init(this);
+        movement_init(this);
+        crouch_init(this);
+        jump_init(this);
+        debug_init(this);
 
         new Controls(this);
     }
     
     update(time){
-        sprites_update(this, time);
         this.hooks.update.forEach(action=>action(time))
     }
 
     draw(ctx){
-        sprites_draw(this, ctx);
-        debug_draw(this, ctx);
         this.hooks.draw.forEach(action=>action(ctx))
     }
 

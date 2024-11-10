@@ -1,3 +1,8 @@
-export function debug_draw(object, ctx){
-    ctx.strokeRect(object.position.x, object.position.y, object.width, object.height)
+export function debug_init(entity){
+
+    function draw(ctx){
+        ctx.strokeRect(entity.position.x, entity.position.y, entity.width, entity.height)
+    }
+    
+    entity.hooks.draw.push(draw);
 }

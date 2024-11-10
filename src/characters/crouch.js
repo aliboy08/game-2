@@ -1,15 +1,19 @@
-export function add_crouch( entity ){
+export function crouch_init( entity ){
+
+    entity.is_crouching = false;
 
     entity.crouch = ()=>{
-        if( entity.state === 'moving' ) {
+        
+        entity.is_crouching = true;
+        entity.animate('crouch')
+
+        if( entity.is_moving ) {
             entity.velocity.x = 0;
         }
-        entity.set_state('crouch');
-        entity.animate('crouch')
     }
     
     function update(){
-        entity.position.x += entity.velocity.x;
+        
     }
     
     entity.hooks.update.push(update);

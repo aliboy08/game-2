@@ -43,18 +43,29 @@ export function sprites_loader(data){
     return data;
 }
 
-export function sprites_draw(object, ctx){
+export function sprite_init(entity){
 
-    const state = object.get_sprite_state();
+    entity.hooks.update.push((time)=>{
+        return sprites_update(entity, time);
+    });
 
-    // console.log(object.state)
+    entity.hooks.draw.push((ctx)=>{
+        return sprites_draw(entity, ctx);
+    });
+}
 
-    const scale = object.sprites_data.scale;
-    const { image_width, image_height } = object.sprites_data;
-    let { x, y } = object.position;
+function sprites_draw(entity, ctx){
 
-    x += object.sprites_data.offset.x;
-    y += object.sprites_data.offset.y;
+    const state = entity.get_sprite_state();
+
+    // console.log(entity.state)
+
+    const scale = entity.sprites_data.scale;
+    const { image_width, image_height } = entity.sprites_data;
+    let { x, y } = entity.position;
+
+    x += entity.sprites_data.offset.x;
+    y += entity.sprites_data.offset.y;
 
     ctx.drawImage(
         state.images[state.index],
@@ -65,16 +76,16 @@ export function sprites_draw(object, ctx){
     );
 }
 
-export function sprites_update(object, time){
+function sprites_update(entity, time){
 
-    const state = object.get_sprite_state();
+    const state = entity.get_sprite_state();
 
-    if( time.previous < object.animation_timer + state.time ) return;
-    object.animation_timer = time.previous;
+    if( time.previous < entity.animation_timer + state.time ) return;
+    entity.animation_timer = time.previous;
     
     state.index++;
 
-    // console.log(object.animation_state)
+    // console.log(entity.animation_state)
     
     if( state.loop ) {
         if( state.index === state.images.length ) {
@@ -86,7 +97,7 @@ export function sprites_update(object, time){
         if( state.index === state.images.length ) {
             // freeze to last frame
             state.index = state.images.length-1;
-            object.animation_end(object.animation_state);
+            entity.animation_end(entity.animation_state);
         }
     }
     
