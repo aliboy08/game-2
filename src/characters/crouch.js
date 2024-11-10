@@ -4,11 +4,12 @@ export function crouch_init( entity ){
 
     entity.crouch = ()=>{
         entity.is_crouching = true;
-        entity.animate('crouch')
-
+        
         if( entity.is_moving ) {
             entity.velocity.x = 0;
         }
+
+        entity.animate('crouch')
 
         entity.set_hitbox_offset(38);
     }

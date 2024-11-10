@@ -11,10 +11,11 @@ export function add_controls(entity){
     }
 
     function web_swing(){
-
+        entity.web_swing();
     }
 
     document.addEventListener('keydown',e=>{
+        if( entity.lock ) return;
         if( !controls[entity.pid] ) return;
         let action_key = controls[entity.pid][e.code];
         if( typeof actions[action_key] === 'function' ) {
@@ -23,6 +24,7 @@ export function add_controls(entity){
     })
 
     document.addEventListener('keyup',(e)=>{
+        if( entity.lock ) return;
         if( !controls[entity.pid] ) return;
         let action_key = controls[entity.pid][e.code];
         if( typeof actions[action_key+'_end'] === 'function' ) {

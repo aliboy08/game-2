@@ -109,6 +109,7 @@ export function add_controls(entity) {
     }
 
     document.addEventListener('keydown',e=>{
+        if( entity.lock ) return;
         if( !controls[entity.pid] ) return;
         const action_key = controls[entity.pid][e.code];
         if( typeof actions[action_key] === 'function' ) {
@@ -117,6 +118,7 @@ export function add_controls(entity) {
     })
 
     document.addEventListener('keyup',(e)=>{
+        if( entity.lock ) return;
         if( !controls[entity.pid] ) return;
         const action_key = controls[entity.pid][e.code];
         if( typeof actions_end[action_key+'_end'] === 'function' ) {

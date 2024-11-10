@@ -43,6 +43,9 @@
         },
         "crouch": {
             "indexes": [[217, 220]]
+        },
+        "web_shoot_ground_up_right": {
+            "indexes": [[668, 669]]
         }
     }
 }
