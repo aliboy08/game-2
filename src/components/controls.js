@@ -10,106 +10,118 @@ const controls = {
     },
 }
 
-export default class Controls {
+export function add_controls(entity) {
     
-    constructor(entity){
-
-        this.entity = entity;
-
-        this.pressing = {
-            forward: false,
-            backward: false,
-            crouch: false,
-        }
-
-        document.addEventListener('keydown',e=>{
-            if( !controls[entity.pid] ) return;
-            let action = controls[entity.pid][e.code];
-            if( typeof this[action] === 'function' ) {
-                this[action]();
-            }
-        })
-
-        document.addEventListener('keyup',(e)=>{
-            if( !controls[entity.pid] ) return;
-            let action = controls[entity.pid][e.code];
-            if( typeof this[action+'_end'] === 'function' ) {
-                this[action+'_end']();
-            }
-        });
+    const pressing = {
+        forward: false,
+        backward: false,
+        crouch: false,
     }
 
-    forward(){
-        this.pressing.forward = true;
-        if( this.pressing.crouch ) return;
-        this.entity.forward();
-    }
-    forward_end(){
-        this.pressing.forward = false;
-        this.move_continue();
-    }
-
-    backward(){
-        this.pressing.backward = true;
-        if( this.pressing.crouch ) return;
-        this.entity.backward();
-    }
-    backward_end(){
-        this.pressing.backward = false;
-        this.move_continue();
+    const actions = {
+        forward,
+        backward,
+        crouch,
+        jump,
+        attack_1,
+        attack_2,
+        attack_3,
     }
 
-    move_continue(){
-        if( this.pressing.forward ) {
-            this.forward();
+    const actions_end = {
+        forward_end,
+        backward_end,
+        crouch_end
+    }
+    
+    function forward(){
+        pressing.forward = true;
+        if( pressing.crouch ) return;
+        entity.forward();
+    }
+
+    function forward_end(){
+        pressing.forward = false;
+        move_continue();
+    }
+
+    function backward(){
+        pressing.backward = true;
+        if( pressing.crouch ) return;
+        entity.backward();
+    }
+    function backward_end(){
+        pressing.backward = false;
+        move_continue();
+    }
+
+    function move_continue(){
+        if( pressing.forward ) {
+            forward();
             return true;
         }
 
-        if( this.pressing.backward ) {
-            this.backward();
+        if( pressing.backward ) {
+            backward();
             return true;
         }
         
-        this.entity.move_stop();
+        entity.move_stop();
         return false;
     }
 
-    crouch(){
-        this.pressing.crouch = true;
-        if( this.entity.is_jumping ) return;
-        this.entity.crouch();
+    function crouch(){
+        pressing.crouch = true;
+        if( entity.is_jumping ) return;
+        entity.crouch();
     }
-    crouch_end(){
-        this.pressing.crouch = false;
-        this.entity.crouch_end();
-        this.move_continue();
+    function crouch_end(){
+        pressing.crouch = false;
+        entity.crouch_end();
+        move_continue();
     }
-    crouch_continue(){
-        if( !this.pressing.crouch ) return false;
-        this.crouch();
+    function crouch_continue(){
+        if( !pressing.crouch ) return false;
+        crouch();
         return true;
     }
 
-    jump(){
-        if( this.entity.is_jumping ) return;
-        this.entity.jump();
-        this.entity.on_land = ()=>{
-            this.entity.on_land = null;
-            if( this.crouch_continue() ) return;
-            this.move_continue();
+    function jump(){
+        if( entity.is_jumping ) return;
+        entity.jump();
+        entity.on_land = ()=>{
+            entity.on_land = null;
+            if( crouch_continue() ) return;
+            move_continue();
         }
     }
     
-    attack_1(){
+    function attack_1(){
 
     }
 
-    attack_2(){
+    function attack_2(){
         
     }
 
-    attack_3(){
+    function attack_3(){
         
     }
+
+    document.addEventListener('keydown',e=>{
+        if( !controls[entity.pid] ) return;
+        const action_key = controls[entity.pid][e.code];
+        if( typeof actions[action_key] === 'function' ) {
+            actions[action_key]();
+        }
+    })
+
+    document.addEventListener('keyup',(e)=>{
+        if( !controls[entity.pid] ) return;
+        const action_key = controls[entity.pid][e.code];
+        if( typeof actions_end[action_key+'_end'] === 'function' ) {
+            actions_end[action_key+'_end']();
+        }
+    });
     
 }

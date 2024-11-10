@@ -4,7 +4,7 @@ import { jump_init } from './jump';
 import { crouch_init } from './crouch';
 import { hitbox_init } from './hitbox';
 import { debug_init } from 'components/debug';
-import Controls from 'components/controls';
+import { add_controls } from 'components/controls';
 
 export default class Character {
 
@@ -51,7 +51,7 @@ export default class Character {
         
         this.hooks.init.forEach(action=>action(this))
 
-        new Controls(this);
+        add_controls(this);
     }
     
     update(time){
