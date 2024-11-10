@@ -39,9 +39,9 @@ export function add_controls(entity) {
         if( pressing.crouch ) return;
         entity.forward();
     }
-
     function forward_end(){
         pressing.forward = false;
+        if( entity.lock ) return;
         move_continue();
     }
 
@@ -52,6 +52,7 @@ export function add_controls(entity) {
     }
     function backward_end(){
         pressing.backward = false;
+        if( entity.lock ) return;
         move_continue();
     }
 
@@ -77,9 +78,11 @@ export function add_controls(entity) {
     }
     function crouch_end(){
         pressing.crouch = false;
+        if( entity.lock ) return;
         entity.crouch_end();
         move_continue();
     }
+
     function crouch_continue(){
         if( !pressing.crouch ) return false;
         crouch();
@@ -118,7 +121,6 @@ export function add_controls(entity) {
     })
 
     document.addEventListener('keyup',(e)=>{
-        if( entity.lock ) return;
         if( !controls[entity.pid] ) return;
         const action_key = controls[entity.pid][e.code];
         if( typeof actions_end[action_key+'_end'] === 'function' ) {

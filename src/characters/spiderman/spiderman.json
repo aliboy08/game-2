@@ -30,7 +30,7 @@
             "indexes": [[200, 210]]
         },
         "jump_backward": {
-            "indexes": [[211, 216]]
+            "indexes": [[711, 722]]
         },
         "falling": {
             "indexes": [[189, 195]]
@@ -44,8 +44,11 @@
         "crouch": {
             "indexes": [[217, 220]]
         },
-        "web_shoot_ground_up_right": {
-            "indexes": [[668, 669]]
+        "web_line_shoot": {
+            "indexes": [[572]]
+        },
+        "web_swing": {
+            "indexes": [[573, 577]]
         }
     }
 }

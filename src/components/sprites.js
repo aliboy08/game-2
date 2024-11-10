@@ -12,6 +12,14 @@ export function sprites_loader(data){
 
             let [start, end] = range;
 
+            if( !end ) {
+                // single image
+                const img = new Image();
+                img.src = `${data.base_src + start}.${file_extension}`;
+                state.images.push(img);
+                return;
+            }
+
             let i = start;
 
             if( start < end ) {
@@ -66,6 +74,11 @@ function sprites_draw(entity, ctx){
 
     x += entity.sprites_data.offset.x;
     y += entity.sprites_data.offset.y;
+
+    if( entity.animation_offset ) {
+        x += entity.animation_offset.x;
+        y += entity.animation_offset.y;
+    }
 
     ctx.drawImage(
         state.images[state.index],

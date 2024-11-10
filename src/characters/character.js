@@ -28,6 +28,7 @@ export default class Character {
         
         this.animation_state = 'idle';
         this.animation_timer = 0;
+        this.animation_offset = null;
         
         this.position = args.position ?? {
             x: 0,
@@ -66,8 +67,12 @@ export default class Character {
         return this.sprites_data.states[this.animation_state];
     }
 
-    animate(animation_state){
+    animate(animation_state, offset = null){
         if( this.animation_state === animation_state ) return;
+        this.animation_offset = offset;
+        if( offset ) {
+            console.log('set animation offset', this.animation_offset)
+        }
         this.animation_state = animation_state;
         this.sprites_data.states[this.animation_state].index = 0;
     }

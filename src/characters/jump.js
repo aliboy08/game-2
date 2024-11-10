@@ -66,6 +66,7 @@ export function jump_init( entity ){
     }
     
     function update(){
+        if( entity.lock ) return;
         jumping_up();
         falling_down();
         landing();

@@ -24,7 +24,6 @@ export function add_controls(entity){
     })
 
     document.addEventListener('keyup',(e)=>{
-        if( entity.lock ) return;
         if( !controls[entity.pid] ) return;
         let action_key = controls[entity.pid][e.code];
         if( typeof actions[action_key+'_end'] === 'function' ) {
