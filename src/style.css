@@ -6,10 +6,25 @@ body {
 	color: rgba(255, 255, 255, 0.87);
 	background-color: #242424;
 	display: flex;
+    flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	min-height: 100vh;
+    font-size: 14px;
+    font-family: sans-serif;
 }
 canvas {
     background: #020812;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    div {
+        border: 1px solid #ffffff5b;
+        border-radius: 2px;
+        padding: 3px 10px;
+    }
 }
