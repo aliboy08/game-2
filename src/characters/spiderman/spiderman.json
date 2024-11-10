@@ -24,13 +24,16 @@
             "indexes": [[180, 169]]
         },
         "jump": {
-            "indexes": [[197, 189], [189, 198]]
+            "indexes": [[198, 195], [189, 195]]
         },
         "jump_forward": {
             "indexes": [[200, 210]]
         },
         "jump_backward": {
             "indexes": [[211, 216]]
+        },
+        "falling": {
+            "indexes": [[189, 195]]
         },
         "land": {
             "indexes": [[196, 199]]

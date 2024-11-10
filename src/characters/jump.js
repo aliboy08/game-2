@@ -41,6 +41,7 @@ export function add_jump( entity ){
         // if( state !== 'jumping_up' ) return;
         if( entity.velocity.y <= stage.gravity ) return;
         state = 'falling_down';
+        // entity.animate('falling')
         // console.log('falling_down')
     }
 
