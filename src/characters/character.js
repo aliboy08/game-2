@@ -8,6 +8,15 @@ import Controls from 'components/controls';
 
 export default class Character {
 
+    constructor(){
+        this.hooks = {
+            init: [],
+            update: [],
+            animation_end: [],
+            draw: [],
+        };
+    }
+
     load_sprite(data){
         this.sprites_data = sprites_loader(data);
     }
@@ -33,18 +42,14 @@ export default class Character {
         this.move_speed = 3;
         this.jump_force = 700;
         
-        this.hooks = {
-            update: [],
-            animation_end: [],
-            draw: [],
-        };
-        
         sprite_init(this);
         hitbox_init(this);
         movement_init(this);
         crouch_init(this);
         jump_init(this);
         debug_init(this);
+        
+        this.hooks.init.forEach(action=>action(this))
 
         new Controls(this);
     }

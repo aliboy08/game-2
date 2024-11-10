@@ -17,9 +17,8 @@ export function crouch_init( entity ){
         entity.set_hitbox_offset(0);
     }
     
-    function update(){
-        
-    }
+    // function update(){
+    // }
     
-    entity.hooks.update.push(update);
+    // entity.hooks.update.push(update);
 }
