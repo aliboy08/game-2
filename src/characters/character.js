@@ -1,6 +1,7 @@
 import { sprites_loader, sprites_draw, sprites_update } from 'components/sprites';
-import { movement } from './movement';
-import { jump } from './jump';
+import { add_movement } from './movement';
+import { add_jump } from './jump';
+import { add_crouch } from './crouch';
 import { debug_draw } from 'components/debug';
 import Controls from 'components/controls';
 
@@ -15,8 +16,9 @@ export default class Character {
         this.height = this.sprites_data.height;
         this.pid = args.pid ?? 'P1';
         
-        this.state = 'idle';
+        this.animation_state = 'idle';
         this.animation_timer = 0;
+        
         this.position = args.position ?? {
             x: 0,
             y: 0,
@@ -36,12 +38,13 @@ export default class Character {
             draw: [],
         };
         
-        movement(this);
-        jump(this);
+        add_movement(this);
+        add_crouch(this);
+        add_jump(this);
 
         new Controls(this);
     }
-
+    
     update(time){
         sprites_update(this, time);
         this.hooks.update.forEach(action=>action(time))
@@ -54,18 +57,17 @@ export default class Character {
     }
 
     get_sprite_state(){
-        return this.sprites_data.states[this.state];
+        return this.sprites_data.states[this.animation_state];
     }
 
-    animate(state){
-        if( this.state === state ) return;
-        // console.log('animate', state)
-        this.state = state;
-        this.sprites_data.states[this.state].index = 0;
+    animate(animation_state){
+        if( this.animation_state === animation_state ) return;
+        this.animation_state = animation_state;
+        this.sprites_data.states[this.animation_state].index = 0;
     }
 
-    animation_end(state){
-        this.hooks.animation_end.forEach(action=>action(state))
+    animation_end(animation_state){
+        this.hooks.animation_end.forEach(action=>action(animation_state))
     }
 
     get_direction(){
@@ -73,4 +75,5 @@ export default class Character {
         if( this.velocity.x < 0 ) return 'backward';
         return false;
     }
+
 }

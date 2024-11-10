@@ -103,7 +103,7 @@ export default class Controls {
                 this.player.backward();
             }
             else {
-                this.player.idle();
+                this.player.animate('idle');
             }
 
         }

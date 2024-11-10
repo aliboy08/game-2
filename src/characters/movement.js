@@ -1,34 +1,29 @@
-export function movement( entity ){
+export function add_movement( entity ){
 
-    let state = '';
-
-    entity.idle = ()=>{
-        entity.animate('idle')
-        state = '';
-    }
+    entity.is_moving = false;
+    entity.is_backward = false;
+    entity.is_forward = false;
 
     entity.forward = ()=>{
-        state = 'moving';
+        entity.is_moving = true;
+        entity.is_forward = true;
         entity.velocity.x = entity.move_speed;
         if( !entity.is_jumping ) entity.animate('forward');
     }
 
     entity.backward = ()=>{
-        state = 'moving';
+        entity.is_moving = true;
+        entity.is_backward = true;
         entity.velocity.x = -entity.move_speed;
         if( !entity.is_jumping ) entity.animate('backward');
     }
 
     entity.move_stop = ()=>{
         entity.velocity.x = 0;
+        entity.is_moving = false;
+        entity.is_backward = false;
+        entity.is_forward = false;
         if( !entity.is_jumping ) entity.animate('idle');
-    }
-
-    entity.crouch = ()=>{
-        if( state === 'moving' ) {
-            entity.velocity.x = 0;
-        }
-        entity.animate('crouch')
     }
     
     function update(){
