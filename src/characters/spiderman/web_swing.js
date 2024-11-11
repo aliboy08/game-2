@@ -2,6 +2,8 @@ export function add_web_swing(entity){
     
     const canvas = entity.stage.canvas;
 
+    let animation_timer;
+
     let state;
 
     let last_position_y;
@@ -12,7 +14,9 @@ export function add_web_swing(entity){
         start: false,
         line_end: false,
         length: 0,
-        velocity: 5,
+        velocity: 400,
+        acceleration: 0,
+        acceleration_rate: 800,
         origin_offset: {
             x: 5,
             y: -32,
@@ -20,7 +24,9 @@ export function add_web_swing(entity){
     }
 
     let swing = {
-        velocity: 6,
+        velocity: 70000,
+        acceleration: 1500,
+        acceleration_rate: 150,
         destination: {},
     };
 
@@ -35,7 +41,7 @@ export function add_web_swing(entity){
     
     function update(time){
         freeze_position();
-        web_line_create();
+        web_line_create(time);
         swing_update(time);
     }
     
@@ -69,12 +75,13 @@ export function add_web_swing(entity){
         }
     }
     
-    function web_line_create(){
+    function web_line_create(time){
         
         if( !web_line.start ) return;
         if( web_line.line_end ) return;
 
-        web_line.length += web_line.velocity;
+        web_line.acceleration = (web_line.acceleration + web_line.acceleration_rate) * time.seconds_passed;
+        web_line.length += (web_line.velocity + web_line.acceleration_rate) * time.seconds_passed;
 
         let {length, angle, origin} = web_line;
         
@@ -110,7 +117,8 @@ export function add_web_swing(entity){
 
         let start_x = entity.position.x + entity.width;
         let distance = (web_line.current.x - start_x) * 2;
-
+        
+        swing.acceleration = 1500;
         swing.destination = {
             x: start_x + distance,
             y: entity.position.y,
@@ -121,8 +129,16 @@ export function add_web_swing(entity){
 
         if( state !== 'swing' ) return;
 
+        // if( time.previous < animation_timer + 60 ) return;
+        // animation_timer = time.previous;
+
         // entity.position.x += easeInOutQuint(time.seconds_passed, swing.velocity, 3, .01);
-        entity.velocity.x = swing.velocity;
+        // swing.acceleration += swing.acceleration;
+        swing.acceleration = (swing.acceleration * swing.acceleration_rate) * time.seconds_passed;
+        console.log(swing.acceleration)
+        entity.velocity.x = (swing.velocity + swing.acceleration) * time.seconds_passed;
+
+        // console.log({vx: entity.velocity.x, a: swing.acceleration, animation_timer})
         
         if( entity.position.x >= bounds_left ) {
             entity.position.x = bounds_left;
@@ -153,12 +169,7 @@ export function add_web_swing(entity){
         ctx.strokeRect(x, y, width, height)
         ctx.restore();
     }
-    
-    function easeInOutQuint (t, b, c, d) {
-        if ((t /= d / 2) < 1) return c / 2 * t * t * t * t * t + b;
-        return c / 2 * ((t -= 2) * t * t * t * t + 2) + b;
-    }
-    
+
     // entity.hooks.animation_end.push(animation_end);
     entity.hooks.update.push(update);
     // entity.hooks.draw.push(draw);

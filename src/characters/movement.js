@@ -26,8 +26,10 @@ export function movement_init( entity ){
         if( !entity.is_jumping ) entity.animate('idle');
     }
     
-    function update(){
-        entity.position.x += entity.velocity.x;
+    function update(time){
+        // entity.position.x += entity.velocity.x;
+        // console.log(time)
+        entity.position.x += entity.velocity.x * time.seconds_passed;
     }
     
     entity.hooks.update.push(update);

@@ -2,7 +2,7 @@ export default class Stage {
     
     constructor(ctx){
         this.entities = [];
-        this.gravity = 8;
+        this.gravity = 10;
         this.floor_height = 20;
         this.ctx = ctx;
         this.canvas = ctx.canvas;

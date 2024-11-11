@@ -47,8 +47,7 @@ function frame(time){
     // for consistent fps on different refresh rates
     frame_time.seconds_passed = (time - frame_time.previous) / 1000;
     frame_time.previous = time;
-
-    requestAnimationFrame(frame);
     update(frame_time);
     draw(ctx);
+    requestAnimationFrame(frame);
 }

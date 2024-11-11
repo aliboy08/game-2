@@ -40,7 +40,7 @@ export default class Character {
             y: 0,
         }
 
-        this.move_speed = 3;
+        this.move_speed = 400;
         this.jump_force = 700;
         
         sprite_init(this);
@@ -70,9 +70,6 @@ export default class Character {
     animate(animation_state, offset = null){
         if( this.animation_state === animation_state ) return;
         this.animation_offset = offset;
-        if( offset ) {
-            console.log('set animation offset', this.animation_offset)
-        }
         this.animation_state = animation_state;
         this.sprites_data.states[this.animation_state].index = 0;
     }
