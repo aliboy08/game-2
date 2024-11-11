@@ -1,20 +1,30 @@
 const controls = {
     P1: {
-        KeyK: 'web_swing',
+        KeyK: 'web_moves',
     },
 }
 
 export function add_controls(entity){
 
-    const actions = {
-        web_swing,
+    const pressing = {
+        KeyW: false,
     }
 
-    function web_swing(){
-        entity.web_swing();
+    const actions = {
+        web_moves,
+    }
+
+    function web_moves(){
+        if( pressing.KeyW ) {
+            entity.web_zip_up();
+        }
+        else {
+            entity.web_swing();
+        }
     }
 
     document.addEventListener('keydown',e=>{
+        pressing[e.code] = true;
         if( entity.lock ) return;
         if( !controls[entity.pid] ) return;
         let action_key = controls[entity.pid][e.code];
@@ -24,6 +34,7 @@ export function add_controls(entity){
     })
 
     document.addEventListener('keyup',(e)=>{
+        pressing[e.code] = false;
         if( !controls[entity.pid] ) return;
         let action_key = controls[entity.pid][e.code];
         if( typeof actions[action_key+'_end'] === 'function' ) {

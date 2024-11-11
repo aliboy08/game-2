@@ -49,6 +49,12 @@
         },
         "web_swing": {
             "indexes": [[573, 577]]
+        },
+        "web_line_up_shoot": {
+            "indexes": [[670, 671]]
+        },
+        "web_line_up_grab": {
+            "indexes": [[321]]
         }
     }
 }

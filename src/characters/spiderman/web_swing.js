@@ -2,8 +2,6 @@ export function add_web_swing(entity){
     
     const canvas = entity.stage.canvas;
 
-    let animation_timer;
-
     let state;
 
     let last_position_y;
@@ -14,9 +12,13 @@ export function add_web_swing(entity){
         start: false,
         line_end: false,
         length: 0,
-        velocity: 400,
-        acceleration: 0,
-        acceleration_rate: 800,
+        velocity: 2000,
+        velocity_min: 2,
+        deceleration: {
+            initial: 200,
+            current: 0,
+            rate: 4000,
+        },
         origin_offset: {
             x: 5,
             y: -32,
@@ -73,6 +75,7 @@ export function add_web_swing(entity){
             x: entity.position.x + entity.width + web_line.origin_offset.x,
             y: entity.position.y + web_line.origin_offset.y,
         }
+        web_line.deceleration.current = web_line.deceleration.initial;
     }
     
     function web_line_create(time){
@@ -80,8 +83,13 @@ export function add_web_swing(entity){
         if( !web_line.start ) return;
         if( web_line.line_end ) return;
 
-        web_line.acceleration = (web_line.acceleration + web_line.acceleration_rate) * time.seconds_passed;
-        web_line.length += (web_line.velocity + web_line.acceleration_rate) * time.seconds_passed;
+        web_line.deceleration.current += web_line.deceleration.rate * time.seconds_passed;
+        let velocity = ( web_line.velocity - web_line.deceleration.current ) * time.seconds_passed;
+        if( velocity < web_line.velocity_min ) velocity = web_line.velocity_min;
+
+        console.log(velocity)
+        
+        web_line.length += velocity;
 
         let {length, angle, origin} = web_line;
         
@@ -129,16 +137,8 @@ export function add_web_swing(entity){
 
         if( state !== 'swing' ) return;
 
-        // if( time.previous < animation_timer + 60 ) return;
-        // animation_timer = time.previous;
-
-        // entity.position.x += easeInOutQuint(time.seconds_passed, swing.velocity, 3, .01);
-        // swing.acceleration += swing.acceleration;
         swing.acceleration = (swing.acceleration * swing.acceleration_rate) * time.seconds_passed;
-        console.log(swing.acceleration)
         entity.velocity.x = (swing.velocity + swing.acceleration) * time.seconds_passed;
-
-        // console.log({vx: entity.velocity.x, a: swing.acceleration, animation_timer})
         
         if( entity.position.x >= bounds_left ) {
             entity.position.x = bounds_left;
